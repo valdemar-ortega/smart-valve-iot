@@ -284,13 +284,6 @@ estado de la válvula, con los botones **ABRIR** y **CERRAR**.
   el WiFi y el MQTT funcionan por eventos y se reconectan solos, y una
   tarea de FreeRTOS aparte muestrea a ritmo fijo con `vTaskDelayUntil`.
 
-## Contacto
-
-Jesus Valdemar Ortega Dominguez
-
-- Correo: [jvaldemarod@gmail.com](mailto:jvaldemarod@gmail.com)
-- LinkedIn: [linkedin.com/in/valdemar-ortega](https://www.linkedin.com/in/valdemar-ortega)
-
 ## Licencia
 
 [MIT](LICENSE)
