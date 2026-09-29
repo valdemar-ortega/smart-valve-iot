@@ -1,5 +1,7 @@
 # Smart Valve IoT (Válvula inteligente)
 
+[![CI](https://github.com/valdemar-ortega/smart-valve-iot/actions/workflows/ci.yml/badge.svg)](https://github.com/valdemar-ortega/smart-valve-iot/actions/workflows/ci.yml)
+
 Monitoreo remoto de presión y control de una válvula desde un celular Android.
 
 Un **ESP32-S3** lee un transductor de presión analógico y publica el valor

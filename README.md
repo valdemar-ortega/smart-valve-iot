@@ -1,5 +1,7 @@
 # Smart Valve IoT
 
+[![CI](https://github.com/valdemar-ortega/smart-valve-iot/actions/workflows/ci.yml/badge.svg)](https://github.com/valdemar-ortega/smart-valve-iot/actions/workflows/ci.yml)
+
 Remote pressure monitoring and valve control from an Android phone.
 
 An **ESP32-S3** reads an analog pressure transducer and publishes the value
