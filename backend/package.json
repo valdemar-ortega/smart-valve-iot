@@ -1,0 +1,20 @@
+{
+  "name": "smart-valve-backend",
+  "version": "1.0.0",
+  "description": "Keeps the Tuya cloud secret on the server and exposes open / close / status to the Smart Valve app.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@tuya/tuya-connector-nodejs": "^2.1.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

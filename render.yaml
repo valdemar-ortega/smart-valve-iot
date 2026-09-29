@@ -1,0 +1,24 @@
+# Render Blueprint: New > Blueprint > pick this repo. Render asks for the
+# secret values (sync: false) and never stores them in git.
+services:
+  - type: web
+    name: smart-valve-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: TUYA_ACCESS_ID
+        sync: false
+      - key: TUYA_ACCESS_SECRET
+        sync: false
+      - key: TUYA_ENDPOINT
+        value: https://openapi.tuyaus.com
+      - key: DEVICE_ID
+        sync: false
+      - key: VALVE_CODE
+        value: switch
+      - key: API_KEY
+        generateValue: true
