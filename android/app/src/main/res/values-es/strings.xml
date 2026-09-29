@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Válvula Inteligente</string>
+    <string name="board_offline">Placa desconectada</string>
+    <string name="sensor_ok">Sensor OK</string>
+    <string name="sensor_fault">Falla del sensor</string>
+    <string name="sensor_fault_hint">Falla del sensor: revisa el cableado y la alimentación.</string>
+    <string name="valve_open">Válvula: ABIERTA</string>
+    <string name="valve_closed">Válvula: CERRADA</string>
+    <string name="valve_unknown">Válvula: ---</string>
+    <string name="action_open">ABRIR</string>
+    <string name="action_close">CERRAR</string>
+    <string name="action_dismiss">Cerrar aviso</string>
+    <string name="error_prefix">Error: %1$s</string>
+    <string name="not_configured_title">Falta configurar</string>
+    <string name="not_configured_body">Copia android/secrets.properties.example como android/secrets.properties, llena los datos de tu broker y de tu backend, y vuelve a compilar la app.</string>
+</resources>

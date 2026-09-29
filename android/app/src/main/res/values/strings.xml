@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Smart Valve</string>
+    <string name="board_offline">Board offline</string>
+    <string name="sensor_ok">Sensor OK</string>
+    <string name="sensor_fault">Sensor fault</string>
+    <string name="sensor_fault_hint">Sensor fault: check the sensor wiring and supply.</string>
+    <string name="valve_open">Valve: OPEN</string>
+    <string name="valve_closed">Valve: CLOSED</string>
+    <string name="valve_unknown">Valve: ---</string>
+    <string name="action_open">OPEN</string>
+    <string name="action_close">CLOSE</string>
+    <string name="action_dismiss">Dismiss</string>
+    <string name="error_prefix">Error: %1$s</string>
+    <string name="not_configured_title">Not configured</string>
+    <string name="not_configured_body">Copy android/secrets.properties.example to android/secrets.properties, fill in your broker and backend details, and rebuild the app.</string>
+</resources>
