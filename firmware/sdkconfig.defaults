@@ -1,0 +1,17 @@
+# Target board: ESP32-S3-DevKitC-1
+CONFIG_IDF_TARGET="esp32s3"
+
+# Console over the native USB port (the "USB" connector on the DevKitC-1)
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+# TLS: verify the broker certificate against the Mozilla CA bundle
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=y
+
+# Room for the TLS handshake inside the MQTT task
+CONFIG_MQTT_TASK_STACK_SIZE=6144
+
+# 1.5 MB app partition (TLS + Wi-Fi + MQTT do not fit comfortably in 1 MB).
+# Every DevKitC-1 variant has at least 4 MB of flash.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_SINGLE_APP_LARGE=y

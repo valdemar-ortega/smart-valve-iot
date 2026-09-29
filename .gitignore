@@ -1,0 +1,12 @@
+# Firmware (ESP-IDF)
+firmware/build/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/managed_components/
+firmware/dependencies.lock
+firmware/test/test_pressure_math
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

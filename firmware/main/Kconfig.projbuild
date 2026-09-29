@@ -1,0 +1,102 @@
+menu "Smart Valve configuration"
+
+    menu "Wi-Fi"
+        config SV_WIFI_SSID
+            string "Wi-Fi SSID"
+            default "my-network"
+            help
+                Name of the 2.4 GHz network the board joins.
+
+        config SV_WIFI_PASSWORD
+            string "Wi-Fi password"
+            default "my-password"
+            help
+                Leave empty for an open network.
+
+        config SV_WIFI_RETRY_MAX_DELAY_MS
+            int "Maximum delay between reconnection attempts (ms)"
+            default 30000
+            range 1000 300000
+            help
+                Reconnection uses exponential backoff starting at 1 s and
+                capped at this value.
+    endmenu
+
+    menu "MQTT"
+        config SV_MQTT_BROKER_URI
+            string "Broker URI"
+            default "mqtts://your-cluster.s1.eu.hivemq.cloud:8883"
+            help
+                Use mqtts:// for TLS (recommended). The broker certificate is
+                checked against the ESP-IDF CA bundle.
+
+        config SV_MQTT_USERNAME
+            string "Username"
+            default ""
+
+        config SV_MQTT_PASSWORD
+            string "Password"
+            default ""
+
+        config SV_MQTT_TOPIC_PRESSURE
+            string "Pressure topic"
+            default "smartvalve/pressure"
+            help
+                A JSON reading is published here (retained) every sample period.
+
+        config SV_MQTT_TOPIC_STATUS
+            string "Status topic"
+            default "smartvalve/status"
+            help
+                "online" is published (retained) on connect. The broker publishes
+                "offline" through the Last Will if the board drops off.
+    endmenu
+
+    menu "Pressure sensor"
+        config SV_SENSOR_GPIO
+            int "ADC input GPIO"
+            default 4
+            help
+                Must be an ADC1 pin (GPIO1..GPIO10 on the ESP32-S3). ADC2 is
+                shared with Wi-Fi and is not usable while the radio is on.
+
+        config SV_SENSOR_ZERO_MV
+            int "Pin voltage at 0 pressure (mV)"
+            default 318
+            help
+                Measured at the GPIO, after the voltage divider.
+
+        config SV_SENSOR_FULL_MV
+            int "Pin voltage at full scale (mV)"
+            default 3000
+
+        config SV_SENSOR_FULL_SCALE_DECI_PSI
+            int "Full-scale pressure (tenths of psi)"
+            default 1740
+            help
+                174.0 psi = 1740. Integer on purpose: Kconfig has no floats.
+
+        config SV_SENSOR_FAULT_LOW_MV
+            int "Fault if pin voltage is below (mV)"
+            default 150
+            help
+                A reading this low means an open wire or unpowered sensor.
+
+        config SV_SENSOR_FAULT_HIGH_MV
+            int "Fault if pin voltage is above (mV)"
+            default 3100
+            help
+                A reading this high means a short to the supply or over-range.
+
+        config SV_SENSOR_SAMPLES
+            int "ADC samples averaged per reading"
+            default 16
+            range 1 64
+
+        config SV_SAMPLE_PERIOD_MS
+            int "Time between readings (ms)"
+            default 2000
+            range 200 60000
+    endmenu
+
+endmenu
