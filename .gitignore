@@ -10,3 +10,7 @@ firmware/test/test_pressure_math
 .vscode/
 .idea/
 .DS_Store
+
+# Firmware (Arduino / PlatformIO)
+firmware-arduino/.pio/
+firmware-arduino/include/secrets.h
