@@ -280,6 +280,13 @@ the valve state, with **OPEN** and **CLOSE** buttons.
   Wi-Fi and MQTT are event-driven and reconnect on their own, and a
   separate FreeRTOS task samples at a fixed rate with `vTaskDelayUntil`.
 
+## Contact
+
+Jesus Valdemar Ortega Dominguez
+
+- Email: [jvaldemarod@gmail.com](mailto:jvaldemarod@gmail.com)
+- LinkedIn: [linkedin.com/in/valdemar-ortega](https://www.linkedin.com/in/valdemar-ortega)
+
 ## License
 
 [MIT](LICENSE)
