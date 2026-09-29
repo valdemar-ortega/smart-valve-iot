@@ -19,6 +19,23 @@ flowchart LR
     T --> V[Wi-Fi valve]
 ```
 
+## Two firmware versions
+
+| Folder | Stack | Status |
+|---|---|---|
+| [`firmware-arduino/`](firmware-arduino) | Arduino core, PlatformIO, PubSubClient | **Field-tested prototype.** Ran on the real installation with the valve and sensor |
+| [`firmware/`](firmware) | ESP-IDF 5.4, plain C, FreeRTOS | **Port of the prototype**, with the improvements listed below. Builds in CI and its logic is unit-tested; not yet run on hardware |
+
+Both publish the same JSON on the same topics, so the app and backend work
+with either one.
+
+**What the port improves:** it verifies the broker's TLS certificate (the
+prototype encrypts but skips verification), converts ADC codes with the
+chip's eFuse calibration instead of a nominal 3.3 V reference, reconnects
+Wi-Fi through events with exponential backoff, takes all settings from
+`menuconfig`, and moves the voltage-to-pressure math into a pure C module
+with unit tests.
+
 ## Features
 
 - **Firmware in C on ESP-IDF 5.4.** Event-driven Wi-Fi with exponential
@@ -40,9 +57,10 @@ flowchart LR
 ## Repository layout
 
 ```
-firmware/   ESP-IDF project (C) for the ESP32-S3
-  main/       app_main, wifi_sta, pressure_sensor, pressure_math, mqtt_link
-  test/       host unit tests (make)
+firmware/          ESP-IDF project (C) for the ESP32-S3
+  main/              app_main, wifi_sta, pressure_sensor, pressure_math, mqtt_link
+  test/              host unit tests (make)
+firmware-arduino/  Arduino prototype (PlatformIO), the field-tested version
 android/    Android Studio project (Kotlin, Jetpack Compose)
 backend/    Node.js service between the app and the Tuya cloud
 docs/       hardware.md (wiring, calibration) · protocol.md (MQTT + REST)
@@ -185,6 +203,24 @@ Run the host unit tests (no board needed):
 make -C firmware/test
 ```
 
+#### Alternative: the Arduino prototype
+
+If you prefer the Arduino version, use it **instead of** the ESP-IDF one
+(same wiring):
+
+1. Install [PlatformIO](https://platformio.org/install) (the VS Code
+   extension or `pip install platformio`).
+2. Create your credentials file and fill it in:
+   ```bash
+   cd firmware-arduino
+   cp include/secrets.example.h include/secrets.h
+   ```
+3. Build, flash and monitor:
+   ```bash
+   pio run -t upload
+   pio device monitor
+   ```
+
 ### 5. Android app
 
 1. Open the `android/` folder in Android Studio.
@@ -236,12 +272,13 @@ the valve state, with **OPEN** and **CLOSE** buttons.
 - **Why MQTT for the pressure.** Many subscribers, retained last value, and
   presence detection through the Last Will, at a few bytes per reading.
   HTTP polling would need a public endpoint on the board.
-- **Non-blocking by design.** The first prototype of the node connected to
-  the broker inside a `while (!connected)` loop in the main loop. When the
-  broker was unreachable the board stopped reading the sensor altogether.
-  In this version Wi-Fi and MQTT are event-driven and reconnect on their
-  own, and a separate FreeRTOS task samples at a fixed rate with
-  `vTaskDelayUntil`.
+- **Non-blocking by design.** The very first version of the node connected
+  to the broker inside a `while (!connected)` loop in the main loop. When
+  the broker was unreachable the board stopped reading the sensor
+  altogether. The Arduino prototype fixed it with a single, rate-limited
+  connection attempt per pass of `loop()`. The ESP-IDF port goes further:
+  Wi-Fi and MQTT are event-driven and reconnect on their own, and a
+  separate FreeRTOS task samples at a fixed rate with `vTaskDelayUntil`.
 
 ## License
 
